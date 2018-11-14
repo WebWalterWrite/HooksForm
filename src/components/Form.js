@@ -1,55 +1,87 @@
 // WebWalterWrite... first lines with Hooks 😅😅😅
-
 import React, { useState } from "react";
+import axios from 'axios';
 
 // State
-const useInputValue = (initialValue, type, placeholder) => {
-  const [value, setValue] = useState(initialValue);
 
-  return {
-    onChange: e => {
-      e.preventDefault();
-      setValue(e.target.value);
-    },
-    value,
-    type,
-    placeholder,
-    name: placeholder,
-  };
+
+const useInputValue = (initialValue, type, placeholder, name) => {
+	const [value, setValue] = useState(initialValue);
+
+	return {
+		onChange: e => {
+			e.preventDefault();
+			setValue(e.target.value);
+		},
+		value,
+		type,
+		placeholder,
+		name
+	};
 };
+
 
 // Soumission du formulaire
-const onSubmit = e => {
-    e.preventDefault();
-    const data = new FormData(e.target);
+const onSubmit = async (e) => {
 
-    let user = {
-    firstname : data.get('firstname'),
-    lastname :data.get('lastname'),
-    email :data.get('email'),
-    }
+	e.preventDefault();
+	const data = new FormData(e.target);
 
-    console.log(user)
+	let user = {
+		firstname: data.get("firstname"),
+		lastname: data.get("lastname"),
+    email: data.get("email"),
+    password: data.get('password')
+	};
+
+  // fetch en bdd 
+  const newUser = await axios.post('http://localhost:4000/user/create',user);
+
+  if(newUser){
+    const {data} = newUser
+    console.log(data)
+  };
+
 };
-
 
 // Formulaire
 export const Form = () => {
+	const firstname = useInputValue("", "text", "ex: jhon","lastname");
+	const lastname = useInputValue("", "text", "ex: snow","firstname");
+	const email = useInputValue("", "email", "ex: jhon.snow@winterfell.got","email");
+  const password = useInputValue("", "password", "ex: whitewalkers","password");
 
-  const firstname = useInputValue("", "text", "firstname");
-  const lastname = useInputValue("", "text", "lastname");
-  const email = useInputValue("", "email", "email");
 
+	return (
+		<div>
+			<form onSubmit={onSubmit}>
+				{/* input firstname */}
+				<div>
+					<label htmlFor="firstname">Prénom</label>
+					<input {...firstname} />
+				</div>
 
-  return (
-    <div>
-      <form onSubmit={onSubmit}>
-              <label htmlFor="firstname">Enter username</label>
-        <input {...firstname} />
-        <input {...lastname} />
-        <input {...email} />
-        <input type="submit" value="valider" />
-      </form>
-    </div>
-  );
+				{/* input lastname */}
+				<div>
+					<label htmlFor="lastname">Nom</label>
+					<input {...lastname} />
+				</div>
+
+				{/* input email */}
+				<div>
+					<label htmlFor="email">Email</label>
+					<input {...email} />
+				</div>
+
+				{/* input password */}
+				<div>
+					<label htmlFor="password">Mot de Passe</label>
+					<input {...password} />
+				</div>
+
+				<input type="submit" value="valider" />
+			</form>
+
+		</div>
+	);
 };
