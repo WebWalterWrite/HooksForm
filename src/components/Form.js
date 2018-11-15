@@ -1,87 +1,112 @@
-// WebWalterWrite... first lines with Hooks 😅😅😅
+
+/*
+ WebWalterWrite... 1ères lignes avec  Hooks 😅😅😅
+ Formulaire utilisé conjoitenment avec le repository https://github.com/WebWalterWrite/MailerTemplates
+ pour tester des envois de mail avec nodemailer
+*/
+
 import React, { useState } from "react";
-import axios from 'axios';
-
-// State
+import axios from "axios";
 
 
-const useInputValue = (initialValue, type, placeholder, name) => {
-	const [value, setValue] = useState(initialValue);
+const errStyle = {color:'#FF5252', fontSize:'0.5em'}
 
-	return {
-		onChange: e => {
-			e.preventDefault();
-			setValue(e.target.value);
-		},
-		value,
-		type,
-		placeholder,
-		name
-	};
-};
+export const Form = () => {
+  
+  // Errors state du formulaire
+  const [errors, setErrors] = useState({});
 
+  /**
+  @desc Equivalent à this.onHandleChange avec un composant class.
+  @func useInputValue - Rempli le champ courant
+  @param {string} initialValue - Chaine de caratcère vide pour initialiser le champ à chaque chargement.
+  @param {type} 
+  */
+  const useInputValue = (initialValue, type, placeholder, name) => {
 
-// Soumission du formulaire
-const onSubmit = async (e) => {
-
-	e.preventDefault();
-	const data = new FormData(e.target);
-
-	let user = {
-		firstname: data.get("firstname"),
-		lastname: data.get("lastname"),
-    email: data.get("email"),
-    password: data.get('password')
-	};
-
-  // fetch en bdd 
-  const newUser = await axios.post('http://localhost:4000/user/create',user);
-
-  if(newUser){
-    const {data} = newUser
-    console.log(data)
+    const [value, setValue] = useState(initialValue);
+    return {
+      onChange: e => {
+        e.preventDefault();
+        setValue(e.target.value);
+      },
+      value,
+      type,
+      placeholder,
+      name
+    };
   };
 
-};
+  // Soumission du formulaire
+  const onSubmit = e => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    let user = {
+      firstname: data.get("firstname"),
+      lastname: data.get("lastname"),
+      email: data.get("email"),
+      password: data.get("password")
+    };
 
-// Formulaire
-export const Form = () => {
-	const firstname = useInputValue("", "text", "ex: jhon","lastname");
-	const lastname = useInputValue("", "text", "ex: snow","firstname");
-	const email = useInputValue("", "email", "ex: jhon.snow@winterfell.got","email");
-  const password = useInputValue("", "password", "ex: whitewalkers","password");
+    fetchForm(user);
+    
+  };
 
+  /**
+   * @desc - Insére en BDD le formulaire, renvoi un objet avec message erreurs ou succès
+   * @func fetchForm - insert en base de données le formulaire
+   * @param {object} data - Contient les données du formulaire
+   * @param {object} newUser - la réponse du serveur
+   */
+  const fetchForm = async (data) => {
+	  // fetch en bdd
+	  const newUser = await axios.post("http://localhost:4000/user/create", data);
 
-	return (
-		<div>
-			<form onSubmit={onSubmit}>
-				{/* input firstname */}
-				<div>
-					<label htmlFor="firstname">Prénom</label>
-					<input {...firstname} />
-				</div>
+	  if (newUser) {
+		  const { errors } = newUser.data;
+		  setErrors(errors);
+		  console.log(errors)
+	  }
+  }
 
-				{/* input lastname */}
-				<div>
-					<label htmlFor="lastname">Nom</label>
-					<input {...lastname} />
-				</div>
+  const firstname = useInputValue("", "text", "ex: jhon", "firstname");
+  const lastname = useInputValue("", "text", "ex: snow", "lastname");
+  const email = useInputValue("", "email", "ex: j.s@winterfell.got", "email");
+  const password = useInputValue("","password","ex: whitewalkers","password");
 
-				{/* input email */}
-				<div>
-					<label htmlFor="email">Email</label>
-					<input {...email} />
-				</div>
+  return (
+    <div>
+      <form onSubmit={onSubmit}>
+        {/* input firstname */}
+        <div>
+          <label htmlFor="firstname">Prénom</label>
+          <input {...firstname} />
+          <div style={errStyle}>{errors.firstname}</div>
+        </div>
 
-				{/* input password */}
-				<div>
-					<label htmlFor="password">Mot de Passe</label>
-					<input {...password} />
-				</div>
+        {/* input lastname */}
+        <div>
+          <label htmlFor="lastname">Nom</label>
+          <input {...lastname} />
+		 <div style={errStyle}>{errors.lastname}</div>
+        </div>
 
-				<input type="submit" value="valider" />
-			</form>
+        {/* input email */}
+        <div>
+          <label htmlFor="email">Email</label>
+          <input {...email} />
+          <div style={errStyle}>{errors.email}</div>
+        </div>
 
-		</div>
-	);
+        {/* input password */}
+        <div>
+          <label htmlFor="password">Mot de Passe</label>
+          <input {...password} />
+          <div style={errStyle}>{errors.password}</div>
+        </div>
+		<div style={errStyle}>{errors.msg}</div>
+        <input type="submit" value="valider" />
+      </form>
+    </div>
+  );
 };
