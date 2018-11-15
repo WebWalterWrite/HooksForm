@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import { Form } from './components/Form';
+import { UserCreate } from './components/form/UserCreate';
 
 class App extends Component {
   render() {
@@ -11,7 +11,7 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            introduction à React Hooks with nodemailer.
+            Front React Hooks with Back Nodemailer Nodemailer Gmail API.
           </p>
           <a
             className="App-link"
@@ -23,7 +23,7 @@ class App extends Component {
           </a>
         </header>
         <main>
-          <Form/>
+          <UserCreate/>
         </main>
       </div>
     );
