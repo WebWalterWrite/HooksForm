@@ -1,11 +1,13 @@
 import { useState } from 'react';
 
-  /**
+
+   /**
   @desc Equivalent à this.onHandleChange avec un composant class.
   @func useInputValue - Rempli le champ courant
   @param {string} initialValue - Chaine de caratcère vide pour initialiser le champ à chaque chargement.
   @param {type} 
   */
+
 
 export const useInputValue = (initialValue, type, placeholder, name) => {
 
@@ -21,3 +23,7 @@ export const useInputValue = (initialValue, type, placeholder, name) => {
         name
     };
 };
+
+
+
+

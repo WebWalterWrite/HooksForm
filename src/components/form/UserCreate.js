@@ -6,8 +6,8 @@
 */
 
 import React, { useState } from "react";
-import axios from "axios";
 import {useInputValue } from '../common/useState';
+import { fetchForm } from '../../utils/api';
 
 const errStyle = {color:'#FF5252', fontSize:'0.8em'}
 const succStyle = { color: "#66BB6A", fontSize: "0.8em" };
@@ -19,7 +19,7 @@ export const UserCreate = () => {
 
 
   // Soumission du formulaire
-  const onSubmit = e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     let user = {
@@ -29,26 +29,9 @@ export const UserCreate = () => {
       password: data.get("password")
     };
 
-    fetchForm(user);
-    
+    const result = await fetchForm(user);
+    setErrors(result);
   };
-
-  /**
-   * @desc - Insére en BDD le formulaire, renvoi un objet avec message erreurs ou succès
-   * @func fetchForm - insert en base de données le formulaire
-   * @param {object} data - Contient les données du formulaire
-   * @param {object} newUser - la réponse du serveur
-   */
-  const fetchForm = async (data) => {
-	  // fetch en bdd
-	  const newUser = await axios.post("http://localhost:4000/user/create", data);
-
-	  if (newUser) {
-		  const { errors } = newUser.data;
-      setErrors(errors);
-      console.log(errors);
-	  }
-  }
 
   const firstname = useInputValue("", "text", "ex: jhon", "firstname");
   const lastname = useInputValue("", "text", "ex: snow", "lastname");
