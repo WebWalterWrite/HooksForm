@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 import { UserCreate } from './components/form/UserCreate';
 
@@ -9,7 +7,6 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <p>
             Front React Hooks with Back Nodemailer Nodemailer Gmail API.
           </p>
