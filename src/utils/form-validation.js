@@ -1,28 +1,3 @@
-// Objet contenant les éventuelles erreurs
-let msg;
-
-const isEmpty = (val, field) => {
-    msg = `Le champ ${field} doit être rempli`;
-    return val.length === 0
-    ? msg
-    : field !== 'email'
-    ? isLength(val, field)
-    : isEmail(val, field)
-};
-
-const isLength = (val, field) => {
-    msg = `Le champ ${field} doit contenir entre 3 et 30 caractères`;
-
-    const size = 2 < val.length && val.length < 32
-    return !size ? msg : false
-};
-
-const isEmail = (val, field) => {
-
-    msg = `Format ${field} invalide`;
-    return !val.includes('@') ? msg : false
-
-};
 
 /** 
 @desc Valider la saisie des champs de formulaire
@@ -30,20 +5,27 @@ const isEmail = (val, field) => {
 @param {object} data - Contient les valeurs des champs du formulaire.
 @param {object} errors - contient les éventuelles erreurs retournées.
 */
+
+import {isEmpty, isErrors} from './fields-validation';
+
 export const isValidForm = async (data) => {
 const errors = {};
 const {firstname, lastname, email, password} = data;
 
-errors.firstname = await isEmpty(firstname, 'prenom');
-errors.lastname = await isEmpty(lastname,'nom');
-errors.email = await isEmpty(email, 'email');
-errors.password = await isEmpty(password, 'mot de passe');
+errors.errFirstname = await isEmpty(firstname, 'prenom');
+errors.errLastname = await isEmpty(lastname,'nom');
+errors.errEmail = await isEmpty(email, 'email');
+errors.errPassword = await isEmpty(password, 'mot de passe');
 
-// Supprimer les champs sans erreurs
-
-for(let error in errors){
-    if(!errors[error]) delete (errors[error])
-}   
-
-return Object.values(errors).length > 0 ? errors : false
+    return await isErrors(errors);
 }
+
+export const isEmail = async user => {
+    const errors = {}
+    errors.email = await isEmpty(user.email,'email');
+
+    return await isErrors(errors);
+};
+
+
+
