@@ -1,30 +1,35 @@
-import React, { Component } from 'react';
+import React, { Fragment } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { UserCreate } from './components/form/UserCreate';
+// Import componentes
+import AllRoutes from "./Routing";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            Front React Hooks with Back Nodemailer Nodemailer Gmail API.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React Hooks
-          </a>
-        </header>
-        <main>
-          <UserCreate/>
-        </main>
-      </div>
-    );
-  }
-}
+const Layout = ({ children }) => (
+	<Fragment>
+		<Header />
+		<main>{children}</main>
+		<Footer />
+	</Fragment>
+);
+
+// Retourne les Routes
+const Routes = () => (
+	<Layout>
+		<Switch>
+			{AllRoutes.map(({path,component},k) => 
+      <Route key={k} path={path} exact component={component} />
+			)}
+		</Switch>
+	</Layout>
+);  
+
+
+const App = () => (
+	<Router>
+		<Route path="/" component={Routes} />
+	</Router>
+);
 
 export default App;
