@@ -6,8 +6,13 @@
 */
 
 import React, { useState } from "react";
+
+// import composant commun
 import {useInputValue } from '../common/useState';
+
+// import utils function
 import { fetchForm } from '../../utils/api';
+import { isValidForm } from '../../utils/form-validation';
 
 const errStyle = {color:'#FF5252', fontSize:'0.8em'}
 const succStyle = { color: "#66BB6A", fontSize: "0.8em" };
@@ -20,6 +25,7 @@ export const UserCreate = () => {
 
   // Soumission du formulaire
   const onSubmit = async (e) => {
+    setErrors({})
     e.preventDefault();
     const data = new FormData(e.target);
     let user = {
@@ -28,9 +34,16 @@ export const UserCreate = () => {
       email: data.get("email"),
       password: data.get("password")
     };
+    
+    // Validation formulaire côté client
+    const resClient = await isValidForm(user)
+    if(resClient) return setErrors(resClient)
 
-    const result = await fetchForm(user);
-    setErrors(result);
+    //validation formulaire côté serveur
+    const resServer = await fetchForm(user);
+    
+    return setErrors(resServer);
+
   };
 
   const firstname = useInputValue("", "text", "ex: jhon", "firstname");
@@ -58,7 +71,7 @@ export const UserCreate = () => {
         {/* input email */}
         <div>
           <label htmlFor="email">Email</label>
-          <input {...email} />
+          <input {...email}/>
           <div style={errStyle}>{errors.email}</div>
         </div>
 
