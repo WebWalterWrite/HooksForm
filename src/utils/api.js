@@ -7,12 +7,22 @@ import axios from 'axios';
    * @param {object} newUser - la réponse du serveur
    */
 
-export const fetchForm = async (data) => {
+export const fetchForm = async (data, route) => {
+    const url = "http://localhost:4000/"
+    let dataUser;
+    switch (route) {
+        case 'create':
+            dataUser = await axios.post(`${url}user/create`, data);
+            break;
+        case 'forgot':
+            dataUser = await axios.post(`${url}user/password/forgot`, data);
+            break;
+        default:
+            break;
+    }
     // fetch en bdd
-    const dataUser = await axios.post("http://localhost:4000/user/create", data);
-
     if (dataUser) {
-        const { errors } = dataUser.data;
-        return errors;
+        const { msg } = dataUser.data;
+        return msg;
     }
 }
