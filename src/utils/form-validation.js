@@ -14,7 +14,7 @@ const isLength = (val, field) => {
     msg = `Le champ ${field} doit contenir entre 3 et 30 caractères`;
 
     const size = 2 < val.length && val.length < 32
-    return !size ? msg : null
+    return !size ? msg : false
 };
 
 const isEmail = (val, field) => {
