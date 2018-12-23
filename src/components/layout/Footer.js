@@ -6,10 +6,10 @@ const Footer = () => (
         <nav>
             <ul>
                 <li>
-                    <Link to="#"></Link>
+                    <Link to="#">Github</Link>
                 </li>
                 <li>
-                    <Link to="#"></Link>
+                    <Link to="#">React UseState</Link>
                 </li>
                 <li>
                     <Link to="#"></Link>
