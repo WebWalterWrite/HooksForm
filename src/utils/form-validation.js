@@ -9,13 +9,15 @@
 import {isEmpty, isErrors} from './fields-validation';
 
 export const isValidForm = async (data) => {
+    
 const errors = {};
+
 const {firstname, lastname, email, password} = data;
 
-errors.errFirstname = await isEmpty(firstname, 'prenom');
-errors.errLastname = await isEmpty(lastname,'nom');
-errors.errEmail = await isEmpty(email, 'email');
-errors.errPassword = await isEmpty(password, 'mot de passe');
+errors.errFirstname = firstname !== undefined && await isEmpty(firstname, 'prenom');
+errors.errLastname = lastname  !== undefined && await isEmpty(lastname,'nom');
+errors.errEmail = email !== undefined && await isEmpty(email, 'email');
+errors.errPassword = password !== undefined && await isEmpty(password, 'mot de passe');
 
     return await isErrors(errors);
 }
