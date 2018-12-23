@@ -3,8 +3,9 @@ import { useInputValue } from "../common/useState";
 import { fetchForm } from "../../utils/api";
 import { isEmail } from '../../utils/form-validation';
 
-const errStyle = {color:'#FF5252', fontSize:'0.8em'}
-const succStyle = { color: "#66BB6A", fontSize: "0.8em" };
+// import style
+import { Form, Input, Error } from './form.styled';
+
 
 export const UserPwdForgot = () => {
 	const [msg, setMsg] = useState({});
@@ -16,7 +17,8 @@ export const UserPwdForgot = () => {
 		const data = new FormData(e.target);
 		let userEmail = {email: data.get("email")};
 		resClient(userEmail);
-    };
+	};
+	
     
 	// Valider côté client le formulaire.
 	const resClient = async data => {
@@ -29,19 +31,22 @@ export const UserPwdForgot = () => {
         const result = await fetchForm(data,'forgot');
         return setMsg(result);
     };
-    console.log(msg)
 	const email = useInputValue("", "email", "ex: cersei@portreal.got", "email");
 	return (
 		<Fragment>  
-			<form onSubmit={onSubmit}>
+			<Form onSubmit={onSubmit}>
 				{/* input email */}
 				<div>
 					<label htmlFor="email">Email</label>
-					<input {...email} />
-					<div style={!msg.email ? errStyle : succStyle}>{msg.email || msg.noEmail}</div>
 				</div>
-				<input type="submit" value="valider" />
-			</form>
+				<div >
+					<Input {...email} />
+					<Error errStyle>
+					{msg.email || msg.noEmail}
+					</Error>
+				</div>
+				<button>Valider</button>
+			</Form>
 		</Fragment>
 	);
 };

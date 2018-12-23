@@ -1,4 +1,3 @@
-
 /*
  WebWalterWrite... 1ères lignes avec  Hooks 😅😅😅
  Formulaire utilisé conjoitenment avec le repository https://github.com/WebWalterWrite/MailerTemplates
@@ -8,80 +7,112 @@
 import React, { useState } from "react";
 
 // import composant commun
-import {useInputValue } from '../common/useState';
+import { useInputValue } from "../common/useState";
 
+// import style
+import { Form, Input, Error } from "./form.styled";
 // import utils function
-import { fetchForm } from '../../utils/api';
-import { isValidForm } from '../../utils/form-validation';
-
-const errStyle = {color:'#FF5252', fontSize:'0.8em'}
-const succStyle = { color: "#66BB6A", fontSize: "0.8em" };
+import { fetchForm } from "../../utils/api";
+import { isValidForm } from "../../utils/form-validation";
 
 export const UserCreate = () => {
-  
-  // Errors state du formulaire
-  const [msg, setMsg] = useState({});
+	// Errors state du formulaire
+	const [msg, setMsg] = useState({});
 
+	// Soumission du formulaire
+	const onSubmit = async e => {
+		setMsg({});
+		e.preventDefault();
+		const data = new FormData(e.target);
+		let user = {
+			firstname: data.get("firstname"),
+			lastname: data.get("lastname"),
+			email: data.get("email"),
+			password: data.get("password")
+		};
 
-  // Soumission du formulaire
-  const onSubmit = async (e) => {
-    setMsg({})
-    e.preventDefault();
-    const data = new FormData(e.target);
-    let user = {
-      firstname: data.get("firstname"),
-      lastname: data.get("lastname"),
-      email: data.get("email"),
-      password: data.get("password")
-    };
-    
-    // Validation formulaire côté client
-    //const resClient = await isValidForm(user)
-    //if(resClient) return setMsg(resClient)
+		// Validation formulaire côté client
+		const resClient = await isValidForm(user);
+		if (resClient) return setMsg(resClient);
 
-    //validation formulaire côté serveur
-    const resServer = await fetchForm(user,'create');
-    return setMsg(resServer);
-  };
+		//validation formulaire côté serveur
+		const resServer = await fetchForm(user, "create");
+		return setMsg(resServer);
+	};
 
-  const firstname = useInputValue("", "text", "ex: jhon", "firstname");
-  const lastname = useInputValue("", "text", "ex: snow", "lastname");
-  const email = useInputValue("", "email", "ex: j.s@winterfell.got", "email");
-  const password = useInputValue("","password","ex: whitewalkers","password");
-  
-  return (
-    <div>
-      <form onSubmit={onSubmit}>
-        {/* input firstname */}
-        <div>
-          <label htmlFor="firstname">Prénom</label>
-          <input {...firstname} />
-          <div style={errStyle}>{msg.errFirstname}</div>
-        </div>
+	const firstname = useInputValue(
+		"",
+		"text",
+		"ex: jhon",
+		"firstname",
+		msg.errFirstname,
+		setMsg
+	);
+	const lastname = useInputValue(
+		"",
+		"text",
+		"ex: snow",
+		"lastname",
+		msg.errLastname
+	);
+	const email = useInputValue(
+		"",
+		"email",
+		"ex: j.s@winterfell.got",
+		"email",
+		msg.errEmail
+	);
+	const password = useInputValue(
+		"",
+		"password",
+		"ex: whitewalkers",
+		"password",
+		msg.errPassword
+	);
 
-        {/* input lastname */}
-        <div>
-          <label htmlFor="lastname">Nom</label>
-          <input {...lastname} />
-		    <div style={errStyle}>{msg.errLastname}</div>
-        </div>
+	return (
+		<div>
+			<Form onSubmit={onSubmit}>
+				{/* Input firstname */}
+				<div>
+					<label htmlFor="firstname">Prénom</label>
+				</div>
+				<div>
+					<Input {...firstname} />
+					<Error errStyle>{msg.errFirstname}</Error>
+				</div>
 
-        {/* input email */}
-        <div>
-          <label htmlFor="email">Email</label>
-          <input {...email}/>
-          <div style={errStyle}>{msg.errEmail}</div>
-        </div>
+				{/* Input lastname */}
+				<div>
+					<label htmlFor="lastname">Nom</label>
+				</div>
+				<div>
+					<Input {...lastname} />
+					<Error errStyle>{msg.errLastname}</Error>
+				</div>
 
-        {/* input password */}
-        <div>
-          <label htmlFor="password">Mot de Passe</label>
-          <input {...password} />
-          <div style={errStyle}>{msg.errPassword}</div>
-        </div>
-		<div style={msg.emailExist ? errStyle : succStyle}>{msg.emailExist || msg.user}</div>
-        <input type="submit" value="valider" />
-      </form>
-    </div>
-  );
+				{/* Input email */}
+				<div>
+					<label htmlFor="email">Email</label>
+				</div>
+
+				<div>
+					<Input {...email} />
+					<Error errStyle>{msg.errEmail}</Error>
+				</div>
+
+				{/* Input password */}
+				<div>
+					<label htmlFor="password">Mot de Passe</label>
+				</div>
+        
+				<div>
+					<Input {...password} />
+					<Error errStyle>{msg.errPassword}</Error>
+				</div>
+				<Error>{msg.emailExist || msg.user}</Error>
+				<button>Valider</button>
+			</Form>
+		</div>
+	);
 };
