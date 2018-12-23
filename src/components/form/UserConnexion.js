@@ -6,7 +6,7 @@ import {useInputValue } from '../common/useState';
 import { isValidForm } from '../../utils/form-validation';
 
 // import style
-import { Form, Input, Error } from './form.styled';
+import { Title, Form, Input, Error } from './form.styled';
 
 export const UserConnexion = () => {
 
@@ -43,6 +43,8 @@ export const UserConnexion = () => {
     const password = useInputValue('',"password","ex: lanister1234","password")
 
     return(
+        <section>
+            <Title>Connexion</Title>
         <Form onSubmit={onSubmit}>
 {/* input email */}
 			<div>
@@ -64,5 +66,6 @@ export const UserConnexion = () => {
 
 			<button>Valider</button>
         </Form>
+        </section>
     )
 }

@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import { useInputValue } from "../common/useState";
 
 // import style
-import { Form, Input, Error } from "./form.styled";
+import { Title, Form, Input, Error } from "./form.styled";
 // import utils function
 import { fetchForm } from "../../utils/api";
 import { isValidForm } from "../../utils/form-validation";
@@ -71,7 +71,8 @@ export const UserCreate = () => {
 	);
 
 	return (
-		<div>
+		<section>
+			<Title>Inscription</Title>
 			<Form onSubmit={onSubmit}>
 				{/* Input firstname */}
 				<div>
@@ -105,7 +106,7 @@ export const UserCreate = () => {
 				<div>
 					<label htmlFor="password">Mot de Passe</label>
 				</div>
-        
+
 				<div>
 					<Input {...password} />
 					<Error errStyle>{msg.errPassword}</Error>
@@ -113,6 +114,6 @@ export const UserCreate = () => {
 				<Error>{msg.emailExist || msg.user}</Error>
 				<button>Valider</button>
 			</Form>
-		</div>
+		</section>
 	);
 };

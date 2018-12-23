@@ -4,7 +4,7 @@ import { fetchForm } from "../../utils/api";
 import { isEmail } from '../../utils/form-validation';
 
 // import style
-import { Form, Input, Error } from './form.styled';
+import { Title, Form, Input, Error } from './form.styled';
 
 
 export const UserPwdForgot = () => {
@@ -33,7 +33,8 @@ export const UserPwdForgot = () => {
     };
 	const email = useInputValue("", "email", "ex: cersei@portreal.got", "email");
 	return (
-		<Fragment>  
+	<section>
+            <Title>Mot de Passe Oublié</Title>
 			<Form onSubmit={onSubmit}>
 				{/* input email */}
 				<div>
@@ -47,6 +48,6 @@ export const UserPwdForgot = () => {
 				</div>
 				<button>Valider</button>
 			</Form>
-		</Fragment>
+		</section>
 	);
 };
