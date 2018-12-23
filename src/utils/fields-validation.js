@@ -2,7 +2,7 @@
 let msg;
 
 const isEmpty = (val, field) => {
-    msg = `Le champ ${field} doit être rempli`;
+    msg = `${field === 'email' ? "L'" : 'Le '} ${field} doit être rempli`;
     return val.length === 0
     ? msg
     : field !== 'email'
@@ -11,7 +11,7 @@ const isEmpty = (val, field) => {
 };
 
 const isLength = (val, field) => {
-    msg = `Le champ ${field} doit contenir entre 3 et 30 caractères`;
+    msg = `Le ${field} doit contenir entre 3 et 30 caractères`;
 
     const size = 2 < val.length && val.length < 32
     return !size ? msg : false
