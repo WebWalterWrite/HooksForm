@@ -9,13 +9,19 @@ import { useState } from 'react';
   */
 
 
-export const useInputValue = (initialValue, type, placeholder, name) => {
+export const useInputValue = (initialValue, type, placeholder, name, state) => {
 
+  
     const [value, setValue] = useState(initialValue);
     return {
         onChange: e => {
             e.preventDefault();
             setValue(e.target.value);
+        },
+        onKeyPress: e => {
+           if(state){
+            e.target.style.backgroundColor = '#FFFFFF';
+           }
         },
         value,
         type,
