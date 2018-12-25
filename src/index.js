@@ -12,14 +12,12 @@ const GlobalStyle = createGlobalStyle`
         box-sizing:border-box;
     }
     html, body{
-        position:relative;
         height:100%;
         width:100%;
     }
     main{
-        position:absolute;
         background-color:#282C33;
-        height:100%;
+        padding-top:2rem;
         width:100%;
     }
     header, footer{
