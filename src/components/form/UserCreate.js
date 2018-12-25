@@ -8,6 +8,8 @@ import React, { useState } from "react";
 
 // import composant commun
 import { useInputValue } from "../common/useState";
+import { Password } from '../common/passwordError';
+
 
 // import style
 import { Title, Form, Input, Error } from "./form.styled";
@@ -80,7 +82,7 @@ export const UserCreate = () => {
 				</div>
 				<div>
 					<Input {...firstname} />
-					<Error errStyle>{msg.errFirstname}</Error>
+					<Error errStyle={msg && msg.errFirstname}>{msg.errFirstname}</Error>
 				</div>
 
 				{/* Input lastname */}
@@ -89,7 +91,7 @@ export const UserCreate = () => {
 				</div>
 				<div>
 					<Input {...lastname} />
-					<Error errStyle>{msg.errLastname}</Error>
+					<Error errStyle={msg && msg.errLastname}>{msg.errLastname}</Error>
 				</div>
 
 				{/* Input email */}
@@ -99,7 +101,7 @@ export const UserCreate = () => {
 
 				<div>
 					<Input {...email} />
-					<Error errStyle>{msg.errEmail}</Error>
+					<Error errStyle={msg && msg.errEmail}>{msg.errEmail}</Error>
 				</div>
 
 				{/* Input password */}
@@ -109,10 +111,13 @@ export const UserCreate = () => {
 
 				<div>
 					<Input {...password} />
-					<Error errStyle>{msg.errPassword}</Error>
+					<Error errStyle={msg && msg.errPassword}>
+                   		<Password msg={msg}/>
+                	</Error>
 				</div>
-				<Error>{msg.emailExist || msg.user}</Error>
+
 				<button>Valider</button>
+				<Error errStyle={msg && msg.emailExist && msg.user}>{msg.emailExist || msg.user}</Error>
 			</Form>
 		</section>
 	);
