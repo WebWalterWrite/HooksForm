@@ -1,13 +1,12 @@
+import {isEmpty, isErrors} from './fields-validation';
 
 /** 
 @desc Valider la saisie des champs de formulaire
 @func isValidForm - Traitement données de formulaires
 @param {object} data - Contient les valeurs des champs du formulaire.
 @param {object} errors - contient les éventuelles erreurs retournées.
+@returns {Object | Boolean } Objet contenant les erreurs ou false si aucune erreur.
 */
-
-import {isEmpty, isErrors} from './fields-validation';
-
 export const isValidForm = async (data) => {
     
 const errors = {};
@@ -22,6 +21,11 @@ errors.errPassword = password !== undefined && await isEmpty(password, 'mot de p
     return await isErrors(errors);
 }
 
+/**
+ * @func isEmail - Vérifier le format email
+ * @param {string} user - Contient la saisie du formulaire.
+ * @returns {Object | Boolean } Objet contenant les erreurs ou false si aucune erreur.
+ */
 export const isEmail = async user => {
     const errors = {}
     errors.email = await isEmpty(user.email,'email');
