@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { createGlobalStyle } from 'styled-components';
+import { media } from './utils/responsive.styled';
 import * as serviceWorker from './serviceWorker';
 
 const GlobalStyle = createGlobalStyle`
@@ -19,9 +20,22 @@ const GlobalStyle = createGlobalStyle`
         background-color:#282C33;
         padding-top:2rem;
         width:100%;
+        height:100vh;
     }
     header, footer{
         background-color:#202329;
+    }
+    p{
+        color:#FFFFFF;
+        font-size:2rem;
+        text-align:justify;
+        ${media.phone`
+            font-size:1rem;
+        `}
+    }
+    a{
+        color:#FFFFFF;
+        text-decoration:none;
     }
 `;
 ReactDOM.render(
