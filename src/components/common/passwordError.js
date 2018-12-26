@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 export const Password = ({msg}) => {
     const { errPassword } = msg;
     if(typeof(errPassword) !== 'object')
-    return (<p>{errPassword}</p>);
+    return (<div>{errPassword}</div>);
     
     return(
     <Fragment>
