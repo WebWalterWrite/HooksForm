@@ -3,11 +3,13 @@ import React,{ useState } from 'react';
 // import composant commun
 import {useInputValue } from '../common/useState';
 import { Password } from '../common/passwordError';
+import { InputPwd } from '../common/input';
 // import validation form
 import { isValidForm } from '../../utils/form-validation';
 
 // import style
 import { Title, Form, Input, Error } from './form.styled';
+
 
 export const UserConnexion = () => {
 
@@ -61,7 +63,8 @@ export const UserConnexion = () => {
 			<div>
 				<label htmlFor="password">Mot de passe</label>
 			</div> 
-            <Input {...password} />
+
+            <InputPwd/>
                 <Error errStyle={msg && msg.errPassword}>
                    <Password msg={msg}/>
                 </Error>
