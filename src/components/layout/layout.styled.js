@@ -5,45 +5,53 @@ export const Intro = styled.div`
     h1{
         color:#61dafb;
         font-size:8vh;
+        text-align:${props => props.txta && "center"}
     }
-    p{
-        color:#FFFFFF;
-        font-size:3vh;
-    }
+
 `;
 export const Nav = styled.nav`
-    padding:10vh;
+    padding:3rem;
+   ${media.phone`
+    padding:1rem;
+   `}
     ul{
-        ${media.phone`
-        display:block;
-        `}
         display:flex;
         justify-content:space-around;
+        ${media.phone`
+        display:block;
+        justify-content:center;
+        `}
+
     }
     li{
-
         list-style-type: none;
-        background-color:#61dafb;
-        padding:1vh;
+        background-color:${props => props.color.bc};
+        padding:1rem;
         ${media.phone`
+        padding:.5rem;
         width:100%;
-        margin:2vh 0 1vh 0;
+        margin:1rem 0rem 1rem 0rem;
         `}
-        width:20%;
+        width:25%;
         display:flex;
         justify-content:center;
         align-items:center;
-
         :hover{
-            border:solid .4vh #FFFFFF;
+            border:solid .2rem ${props => props.color.fc};
             padding:.6vh;
-            box-shadow: 1px 1px 2px  #FFFFFF;
+            transition:all 150ms ease-in-out;
+
+            a{
+                letter-spacing:.2rem;
+                transition:all 200ms ease-in-out;
+            }
+           
         }
     }
     a{  
         text-decoration:none;
         text-align:center;
-        color:#FFFFFF;
+        color:${props => props.color.fc};
         font-size:18px;
         letter-spacing:2px;
         font-weight:900;
