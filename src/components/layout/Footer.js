@@ -1,21 +1,35 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-
+import {Intro,Nav} from './layout.styled';
 const Footer = () => (
     <footer>
-        <nav>
+        <Intro txta>
+            <h1>Project Ressources</h1>
+        </Intro>
+        <Nav color={{fc:"#61dafb", bc:"#FFFFFF"}}>
             <ul>
                 <li>
-                    <Link to="#">Github</Link>
+                    <a 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://github.com/WebWalterWrite/HooksForm">Front Repository Github</a>
                 </li>
                 <li>
-                    <Link to="#">React UseState</Link>
+                    <a 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://github.com/WebWalterWrite/MailerTemplates">Back Repository Github</a>
                 </li>
                 <li>
-                    <Link to="#"></Link>
+                    <a 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://reactjs.org/docs/hooks-intro.html"
+                    >
+                    React Hooks Introducing
+                    </a>
                 </li>
             </ul>
-        </nav>
+        </Nav>
     </footer>
 )
 
