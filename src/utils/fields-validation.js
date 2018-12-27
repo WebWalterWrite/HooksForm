@@ -73,7 +73,7 @@ export const isPassword = async (val, field) =>{
     errors.specCharacter = !isSpecCharacters && `${msg} ${specialsCharacter}`;
     
     // Retourner les erreurs
-    return await isErrors([errors]);
+    return await isErrors(errors);
 
 }
 
