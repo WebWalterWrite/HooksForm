@@ -9,6 +9,7 @@ import React, { useState } from "react";
 // import composant commun
 import { useInputValue } from "../common/useState";
 import { Password } from '../common/passwordError';
+import { InputPwd } from "../common/input";
 
 
 // import style
@@ -110,7 +111,7 @@ export const UserCreate = () => {
 				</div>
 
 				<div>
-					<Input {...password} />
+					<InputPwd/>
 					<Error errStyle={msg && msg.errPassword}>
                    		<Password msg={msg}/>
                 	</Error>
