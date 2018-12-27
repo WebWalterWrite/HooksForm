@@ -19,8 +19,10 @@ const GlobalStyle = createGlobalStyle`
     main{
         background-color:#282C33;
         padding-top:2rem;
+        padding-bottom:2rem;
         width:100%;
-        height:100vh;
+        height:auto;
+        min-height:100vh;
     }
     header, footer{
         background-color:#202329;
