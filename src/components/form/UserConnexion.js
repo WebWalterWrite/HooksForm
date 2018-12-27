@@ -46,7 +46,7 @@ export const UserConnexion = () => {
     const email = useInputValue("",'email',"ex: cersei@portreal.got", "email")
     const password = useInputValue('',"password","ex: lanister1234","password")
     
-
+    console.log(msg.errPassword)
     return(
         <section>
             <Title>Connexion</Title>
