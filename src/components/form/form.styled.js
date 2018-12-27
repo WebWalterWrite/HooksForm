@@ -42,7 +42,8 @@ export const Input = styled.input`
 	padding: 1vh;
 	width: 20%;
 	margin-bottom: 1.5vh;
-	border-radius: 0;
+	border-radius:0;
+	border:none;
 	background-color: ${props => props.color};
 	${media.phone`
             width:70%;
