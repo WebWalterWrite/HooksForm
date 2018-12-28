@@ -46,51 +46,39 @@ let expected;
 test('isPassword => caractères non saisi', async () =>{
     expected = {
         specCharacter :"Le mot de passe doit contenir au moins un des caractères $, @, !, %, ?",
-        number: false,
-        upperCase: false,
     };
     const passwordValid = await isPassword('Sammy77','mot de passe');
     expect(passwordValid).toEqual(
-        expect.arrayContaining([
             expect.objectContaining({
                 ...expected
             })
-        ])
     )
 });
 
 // Tester mot de passe sans la saisie de 2 chiffrens consécutils
 test('isPassword => chiffres non consécutifs ou 1 seul saisi', async () =>{
     expected = { 
-        specCharacter :false,
         number: "Le mot de passe doit contenir au moins 2 chiffres consécutifs entre 0 et 9",
-        upperCase: false,
     };
     const passwordValid = await isPassword('Sammy7!$', 'mot de passe');
     expect(passwordValid).toEqual(
-        expect.arrayContaining([
             expect.objectContaining({
                 ...expected
             })
-        ])
     )
 });
 
 //Tester mot de passe sans la saisie de lettre(s) majuscule(s)
 test('isPassword => Lettre(s) majuscule', async ()=>{
     expected = { 
-        specCharacter :false,
-        number: false,
         upperCase: "Le mot de passe doit contenir au moins une lettre majuscule",
     };
     
     const passwordValid = await isPassword('sammy77!$','mot de passe');
     expect(passwordValid).toEqual(
-        expect.arrayContaining([
             expect.objectContaining({
                 ...expected
             })
-        ])
     )
 });
 
@@ -103,12 +91,9 @@ test('isPassword => Aucunes conditions respectées ', async () =>{
     }
     const passwordValid = await isPassword('sammy7', 'mot de passe');
     expect(passwordValid).toEqual(
-        expect.arrayContaining([
             expect.objectContaining({
                 ...expected
-            })
-        ])
-    )
+            })    )
 })
 
 
