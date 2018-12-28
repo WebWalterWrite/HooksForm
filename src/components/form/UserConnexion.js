@@ -1,4 +1,5 @@
 import React,{ useState } from 'react';
+import { Link } from 'react-router-dom'
 
 // import composant commun
 import {useInputValue } from '../common/useState';
@@ -6,6 +7,8 @@ import { Password } from '../common/passwordError';
 import { InputPwd } from '../common/input';
 // import validation form
 import { isValidForm } from '../../utils/form-validation';
+
+import { fetchForm } from "../../utils/api";
 
 // import style
 import { Title, Form, Input, Error } from './form.styled';
@@ -38,15 +41,14 @@ export const UserConnexion = () => {
   
     // Envoyer vers serveur la demande
     const resServer = async data => {
-        //const result = await fetchForm(data,'forgot');
-        //return setMsg(result);
+        const result = await fetchForm(data,'forgot');
+        return setMsg(result);
     };
 
     // Input Form
     const email = useInputValue("",'email',"ex: cersei@portreal.got", "email")
     const password = useInputValue('',"password","ex: lanister1234","password")
     
-    console.log(msg.errPassword)
     return(
         <section>
             <Title>Connexion</Title>
@@ -71,6 +73,7 @@ export const UserConnexion = () => {
                 </Error>
 
 			<button>Valider</button>
+                <div><Link to="/formulaire/mot-de-passe-oublie">mot de passe oublié</Link></div>
         </Form>
         </section>
     )
