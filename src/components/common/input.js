@@ -31,8 +31,14 @@ const Mdp = styled.div`
   }
 `;
 
+/**
+ * @desc Renvoi un champ input password avec affichage/masquage du mdp
+ * @func InputPwd - affiche un champ input password
+ * @param {String} name - Contient la valeur de l'attribut name du champ input
+ * 
+ */
 
-export const InputPwd = memo(() => {
+export const InputPwd = memo(({name="password"}) => {
    
     // Etat de l'icone
     const [eye, setEye] = useState(true);
@@ -45,7 +51,7 @@ export const InputPwd = memo(() => {
         setEye( prevState => !prevState)
     }
 
-    const InputPass = useInputValue('',eye ? "password" : "text","ex: lanister1234","password")
+    const InputPass = useInputValue('',eye ? "password" : "text","ex: lanister1234",name)
     return <Mdp>
         <input {...InputPass} ref={inputPass}/>
        
