@@ -15,3 +15,19 @@ export const Password = ({msg}) => {
     </Fragment>
     )
 };
+
+export const RePassword = ({ msg }) => {
+    const { errRepassword } = msg
+    const { errRepassword: { number, specCharacter, upperCase } = {} } = msg;
+    if (typeof (errPassword) !== 'object')
+        return (<div>{errRepassword}</div>);
+    return (
+        <Fragment>
+            <ul>
+                {number && <li>{number}</li>}
+                {specCharacter && <li>{specCharacter}</li>}
+                {upperCase && <li>{upperCase}</li>}
+            </ul>
+        </Fragment>
+    )
+};
