@@ -21,7 +21,7 @@ const AllRoutes = [
 		component: UserConnexion
 	},
 	{
-		path: "/formulaire/nouveau-mot-de-passe",
+		path: "/formulaire/nouveau-mot-de-passe/:token",
 		component: userNewPwd
 	}
 ];
