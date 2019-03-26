@@ -19,6 +19,9 @@ export const fetchForm = async (data, route) => {
             break;
         default:
             break;
+        case 'reset':
+            dataUser = await axios.put(`${url}user/password/new-password`, data);
+            break;
     }
     // fetch en bdd
     if (dataUser) {
