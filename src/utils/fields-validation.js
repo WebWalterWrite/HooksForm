@@ -4,21 +4,42 @@ let msg;
 
 /**
  * @func isEmpty - Vérifie si champ n'est pas vide et transfére l'action à la prochaine fonction
- * @param {*} val  - Contient la saisie du champ input
- * @param {*} field - Contient le nom du champ
+ * @param {string} val  - Contient la saisie du champ input
+ * @param {string} field - Contient le nom du champ
+ * @param {string} test - Contient le type de test
  * @returns {Function | string} - passe à la prochaine fonction ou renvoi un msg d'erreur
  */
-const isEmpty = (val, field) => {
+const isEmpty = (val, field, test) => {
     msg = `${field === 'email' ? "L'" : 'Le'} ${field} doit être rempli`;
+
     return val.length === 0
     ? msg
-    : field !== 'email' && field !== 'mot de passe' // Ces champs ne sont pas traités par isLength fn
-    ? isFullString(val, field)
-    : field === 'email'
-    ? isEmail(val, field)
-    : isPassword(val, field)
+    : dispatchCheck(val, field, test)
 };
 
+/**
+ * 
+ * @func dispatchCheck - transmet selon le type de champ
+ * @description - 
+ * email : Ne passe que le test de validation de format email isEmail
+ * login: Pour les formulaires de connexion aucun erreur concernant le format du mdp
+ * @param {*} val  - Contient la saisie du champ input
+ * @param {*} field - Contient le nom du champ
+ */
+const dispatchCheck = (val, field, test) => {
+
+    switch (test){
+        case 'email':
+            return isEmail(val, field);
+
+        case 'mdp':
+            return isPassword(val, field)
+
+        case 'login':
+            return
+        default: return isFullString(val, field)
+    }
+}
 
 /**
  * @desc Valider que la saisie ne contient que des lettres
