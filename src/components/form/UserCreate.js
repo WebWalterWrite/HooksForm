@@ -65,13 +65,7 @@ export const UserCreate = () => {
 		"email",
 		msg.errEmail
 	);
-	const password = useInputValue(
-		"",
-		"password",
-		"ex: whitewalkers",
-		"password",
-		msg.errPassword
-	);
+
 
 	return (
 		<section>
@@ -118,7 +112,7 @@ export const UserCreate = () => {
 				</div>
 
 				<button>Valider</button>
-				<Error errStyle={msg && msg.emailExist || msg.user}>{msg.emailExist || msg.user}</Error>
+				<Error errStyle={msg ? msg.emailExist : msg.user}>{msg.emailExist || msg.user}</Error>
 			</Form>
 		</section>
 	);

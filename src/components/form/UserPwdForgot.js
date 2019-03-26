@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { useInputValue } from "../common/useState";
 import { fetchForm } from "../../utils/api";
 import { isEmail } from '../../utils/form-validation';
@@ -23,7 +23,9 @@ export const UserPwdForgot = () => {
 	// Valider côté client le formulaire.
 	const resClient = async data => {
 		const result = await isEmail(data);
-		result ? setMsg(result) : resServer(data)
+		result && setMsg(result)
+        // result ? setMsg(result) : resServer(data) // disable server response
+
     };
     
     // Envoyer vers serveur la demande
@@ -43,7 +45,7 @@ export const UserPwdForgot = () => {
 				<div >
 					<Input {...email} />
 					<Error errStyle>
-					{msg.email || msg.noEmail}
+					{msg.email || msg.success}
 					</Error>
 				</div>
 				<button>Valider</button>

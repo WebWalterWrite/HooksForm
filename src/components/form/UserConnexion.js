@@ -35,7 +35,8 @@ export const UserConnexion = () => {
 	// Valider côté client le formulaire.
 	const resClient = async (data) => {
         const result = await isValidForm(data)
-        result ? setMsg(result) : resServer({email, password})
+        result && setMsg(result)
+        // result ? setMsg(result) : resServer({email, password}) // disable server response
         
     };
   
@@ -47,7 +48,6 @@ export const UserConnexion = () => {
 
     // Input Form
     const email = useInputValue("",'email',"ex: cersei@portreal.got", "email")
-    const password = useInputValue('',"password","ex: lanister1234","password")
     
     return(
         <section>
