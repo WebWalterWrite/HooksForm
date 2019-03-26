@@ -2,7 +2,6 @@
 let msg;
 
 
-
 /**
  * @func isEmpty - Vérifie si champ n'est pas vide et transfére l'action à la prochaine fonction
  * @param {*} val  - Contient la saisie du champ input
@@ -13,12 +12,34 @@ const isEmpty = (val, field) => {
     msg = `${field === 'email' ? "L'" : 'Le'} ${field} doit être rempli`;
     return val.length === 0
     ? msg
-    : field !== 'email'
-    ? isLength(val, field)
-    : isEmail(val, field)
+    : field !== 'email' && field !== 'mot de passe' // Ces champs ne sont pas traités par isLength fn
+    ? isFullString(val, field)
+    : field === 'email'
+    ? isEmail(val, field)
+    : isPassword(val, field)
 };
 
 
+/**
+ * @desc Valider que la saisie ne contient que des lettres
+ * @param {string} val - Contient la saisie du champ input 
+ * @param {string} field - contient le nom du champ 
+ * @returns { boolean | object } - Si aucune erreur ou un objet contenant les erreurs.
+ */
+export const isFullString = (val, field) => {
+    msg = `Le ${field} ne doit contenir que des lettres`;
+    
+    // Regex
+    const regexString =  /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/
+
+    // Vérification condition
+    const isString = regexString.test(val);
+
+    return !isString
+    ? msg
+    : isLength(val, field)
+
+};
 
 /**
  * @func isLength - Test la longueur du champ 
@@ -28,16 +49,12 @@ const isEmpty = (val, field) => {
  */
 export const isLength = (val, field) => {
     msg = `Le ${field} doit contenir entre 3 et 30 caractères`;
-   
+ 
     const size = 2 < val.length && val.length < 32
     return !size 
     ? msg
-    : field !== 'mot de passe'
-    ? false
-    : isPassword(val, field)
+    : false
 };
-
-
 
 /**
  * @desc Valider le format du mot de passe
@@ -87,7 +104,12 @@ export const isPassword = async (val, field) =>{
  */
 export const isEmail = (val, field) => {
     msg = `Format ${field} invalide`;
-    return !val.includes('@') ? msg : false
+
+    const regexMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const isMail = regexMail.test(val);
+
+    return !isMail ? msg : false
 };
 
 
