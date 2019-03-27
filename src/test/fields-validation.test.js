@@ -1,4 +1,4 @@
-import { isEmpty, isLength, isEmail, isPassword } from '../utils/fields-validation';
+import { isEmpty, isFullString, isLength, isEmail, isPassword } from '../utils/fields-validation';
 
 // Tester si aucune erreur.
 test('isEmpty => sans erreur', () =>{
@@ -20,7 +20,7 @@ test('isLength => erreur min caractères', () =>{
     expect(minCharacter).toEqual(msg);
 });
 
-test('isLengh => not undefined', () =>{
+test('isLength => not undefined', () =>{
     const minCharacter = isLength('sammy', 'test');
     expect(minCharacter).toBeFalsy();
 });
@@ -67,6 +67,20 @@ test('isPassword => chiffres non consécutifs ou 1 seul saisi', async () =>{
             })
     )
 });
+
+
+// Tester si le prenom / nom ne contient que des caractères
+test('isFullString => Contient seulement des lettres', async () =>{
+  
+    const msg ="Le prenom ne doit contenir que des lettres"; // erreur attendue
+ 
+    const firstnameValid = await isFullString('sammy77', 'prenom');
+
+    expect(firstnameValid).toEqual(msg);
+});
+
+
+
 
 //Tester mot de passe sans la saisie de lettre(s) majuscule(s)
 test('isPassword => Lettre(s) majuscule', async ()=>{
