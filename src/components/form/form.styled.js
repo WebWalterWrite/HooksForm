@@ -52,10 +52,12 @@ export const Input = styled.input`
 
 export const Error = styled.div`
 	color: ${props => props.errStyle && "#F05B24"};
-	padding: ${props => props.errStyle ? .5 + "rem" : 0};
 	font-size: 1em;
 	margin: 0 auto;
+	margin-bottom:10px;
 	width: 20%;
+	min-height:35px;
+	max-height:100px;
 	${media.phone`
             width: 70%;
       `}
