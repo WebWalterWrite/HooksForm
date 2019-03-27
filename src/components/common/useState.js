@@ -11,8 +11,8 @@ import { useState } from 'react';
 
 export const useInputValue = (initialValue, type, placeholder, name, state) => {
 
-  
     const [value, setValue] = useState(initialValue);
+    
     return {
         onChange: e => {
             e.preventDefault();
@@ -26,7 +26,7 @@ export const useInputValue = (initialValue, type, placeholder, name, state) => {
         value,
         type,
         placeholder,
-        name
+        name,
     };
 };
 

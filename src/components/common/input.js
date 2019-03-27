@@ -38,7 +38,7 @@ const Mdp = styled.div`
  * 
  */
 
-export const InputPwd = memo(({name="password"}) => {
+export const InputPwd = memo(({name="password", complete}) => {
    
     // Etat de l'icone
     const [eye, setEye] = useState(true);
@@ -51,11 +51,9 @@ export const InputPwd = memo(({name="password"}) => {
         setEye( prevState => !prevState)
     }
 
-    const InputPass = useInputValue('',eye ? "password" : "text","ex: lanister1234",name)
+    const InputPass = useInputValue('',eye ? "password" : "text","ex: lanister1234",name, 'off')
     return <Mdp>
-        <input {...InputPass} ref={inputPass}/>
-       
-          <FontAwesomeIcon onClick={show} icon={eye ? faEyeSlash : faEye} size="lg" />
-       
-      </Mdp>;
+        <input {...InputPass} ref={inputPass} autoComplete={complete}/>
+        <FontAwesomeIcon onClick={show} icon={eye ? faEyeSlash : faEye} size="lg" />
+        </Mdp>;
 });
