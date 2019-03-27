@@ -27,21 +27,30 @@ export const UserCreate = () => {
 		setMsg({});
 		e.preventDefault();
 		const data = new FormData(e.target);
+
 		let user = {
-			firstname: data.get("firstname"),
-			lastname: data.get("lastname"),
-			email: data.get("email"),
-			password: data.get("password")
+			firstname: {val:data.get("firstname"), type:""},
+			lastname: {val: data.get("lastname"), type:""},
+			email: {val: data.get("email"), type: 'email'},
+			password: {val: data.get("password"), type: 'mdp'}
 		};
+		resClient(user)
+	}
 
-		// Validation formulaire côté client
-		const resClient = await isValidForm(user);
-		if (resClient) return setMsg(resClient);
+	// Validation formulaire côté client
+	const resClient = async user => {
+		const result= await isValidForm(user);
+		return result && setMsg(result);
+	    // result ? setMsg(result) : resServer(user) // disable server response
+	}
 
-		//validation formulaire côté serveur
-		const resServer = await fetchForm(user, "create");
-		return setMsg(resServer);
+	//validation formulaire côté serveur
+	/*eslint-disable*/
+    const resServer = async data => {
+        const result = await fetchForm(data,'forgot');
+        return setMsg(result);
 	};
+
 
 	const firstname = useInputValue(
 		"",
@@ -105,7 +114,7 @@ export const UserCreate = () => {
 				</div>
 
 				<div>
-					<InputPwd/>
+					<InputPwd complete="new-password"/>
 					<Error errStyle={msg && msg.errPassword}>
                    		<Password msg={msg}/>
                 	</Error>

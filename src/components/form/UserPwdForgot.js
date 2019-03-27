@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useInputValue } from "../common/useState";
 import { fetchForm } from "../../utils/api";
-import { isEmail } from '../../utils/form-validation';
+import { isValidForm } from '../../utils/form-validation';
 
 // import style
 import { Title, Form, Input, Error } from './form.styled';
@@ -15,24 +15,28 @@ export const UserPwdForgot = () => {
         setMsg({})
 		e.preventDefault();
 		const data = new FormData(e.target);
-		let userEmail = {email: data.get("email")};
+		let userEmail = {
+			email: {val: data.get("email"), type: 'email'}
+		};
 		resClient(userEmail);
 	};
 	
     
 	// Valider côté client le formulaire.
 	const resClient = async data => {
-		const result = await isEmail(data);
+		const result = await isValidForm(data);
 		result && setMsg(result)
         // result ? setMsg(result) : resServer(data) // disable server response
 
     };
     
-    // Envoyer vers serveur la demande
+	// Envoyer vers serveur la demande
+	/*eslint-disable*/
     const resServer = async data => {
         const result = await fetchForm(data,'forgot');
         return setMsg(result);
-    };
+	};
+	
 	const email = useInputValue("", "email", "ex: cersei@portreal.got", "email");
 	return (
 	<section>
@@ -44,9 +48,9 @@ export const UserPwdForgot = () => {
 				</div>
 				<div >
 					<Input {...email} />
-					<Error errStyle>
-					{msg.email || msg.success}
-					</Error>
+					<Error errStyle={msg && msg.errEmail}>
+				    {msg.errEmail || msg.noEmail}
+                	</Error>
 				</div>
 				<button>Valider</button>
 			</Form>

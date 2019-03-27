@@ -26,8 +26,8 @@ export const UserConnexion = () => {
 		e.preventDefault();
 		const data = new FormData(e.target);
         let userData = {
-            email: data.get("email"),
-            password: data.get('password')
+            email: { val: data.get("email"), type: 'email'},
+            password: { val: data.get('password'), type: 'login'}
         };
 		resClient(userData);
 	};
@@ -41,9 +41,10 @@ export const UserConnexion = () => {
     };
   
     // Envoyer vers serveur la demande
+    /*eslint-disable*/
     const resServer = async data => {
         const result = await fetchForm(data,'forgot');
-        return setMsg(result);
+        result &&  setMsg(result);
     };
 
     // Input Form
@@ -58,7 +59,7 @@ export const UserConnexion = () => {
 				<label htmlFor="email">Email</label>
 			</div>
 			<div >
-			<Input {...email} />
+			<Input {...email}  autoComplete="email"/>
 				<Error errStyle={msg && msg.errEmail}>
 				    {msg.errEmail || msg.noEmail}
                 </Error>
@@ -67,7 +68,7 @@ export const UserConnexion = () => {
 				<label htmlFor="password">Mot de passe</label>
 			</div> 
 
-            <InputPwd/>
+            <InputPwd complete="cuurent-password"/>
                 <Error errStyle={msg && msg.errPassword}>
                    <Password msg={msg}/>
                 </Error>

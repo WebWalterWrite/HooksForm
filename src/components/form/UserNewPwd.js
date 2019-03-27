@@ -38,6 +38,7 @@ export const userNewPwd = ({ match }) => {
 	};
 
 	// Envoyer vers serveur la demande
+	/*eslint-disable*/
 	const resServer = async data => {
 		const datatoken = Object.assign({ token: match.params.token }, data);
 		const result = await fetchForm(datatoken, "reset");
